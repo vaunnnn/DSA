@@ -62,7 +62,7 @@ Queue* initialize() {
 
     Q->list.count = 0;
     Q->front = -1;
-    Q->rear = -1;
+    Q->rear = -1; 
     
     return Q;
 }

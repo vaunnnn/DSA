@@ -119,3 +119,21 @@ void freeStack(Stack* s) {
     }
     
 }
+
+bool isValidOrdering(Stack* s1, Stack* s2, int size1, int size2) {
+    if(size1 != size2) return false;
+    
+    while(!isEmpty(s1) && !isEmpty(s2)) {
+        int temp1 = peek(s1);
+        int temp2 = peek(s2);
+        
+        if(temp1 == temp2) {
+            pop(s1);
+            pop(s2);
+        } else {
+            pop(s1);
+        }
+    }
+    
+    return isEmpty(s2);
+}
