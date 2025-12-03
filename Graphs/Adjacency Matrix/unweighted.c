@@ -9,6 +9,8 @@ void printMatrix(int **matrix, int n);
 void getNeighbors(int **matrix, int n, int u);
 void freeMatrix(int **matrix, int n);
 
+
+
 int main() {
     int n = 4; // number of nodes
     int **matrix = initializeMatrix(n);

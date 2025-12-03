@@ -23,6 +23,8 @@ void enrollStudent(BST* Tree, Student student);
 Student* searchStudent(BST* Tree, Student student);
 void unenrollStudent(BST* Tree, Student student);
 void displayBlock(BST Tree);
+void deleteMin(BST* Tree);
+void deleteMax(BST* Tree);
 
 int main() {
     BST root = NULL;  
@@ -60,6 +62,12 @@ int main() {
     enrollStudent(&root, s7);
     enrollStudent(&root, s8);
 
+    displayBlock(root);
+
+    deleteMin(&root);
+    deleteMax(&root);
+    
+    printf("\n");
     displayBlock(root);
     
     
@@ -144,4 +152,35 @@ void displayBlock(BST Tree) {
     displayBlock(Tree->LC);
     printf("Student: %s [%s %s] | %s-%d\n", Tree->student->id, Tree->student->fName, Tree->student->lName, Tree->student->course, Tree->student->year);
     displayBlock(Tree->RC);
+}
+
+void deleteMin(BST* Tree) {
+    BST* curr = Tree;
+    while(*curr != NULL && (*curr)->LC != NULL) {
+        curr = &(*curr)->LC;
+    }
+
+    if(*curr == NULL) return;
+
+    Node* toDelete = *curr;
+    if (toDelete->student && toDelete->student->id) {
+        printf("\nDELETED: %s\n", toDelete->student->id);
+    }
+    *curr = toDelete->RC;
+    free(toDelete);
+}
+void deleteMax(BST* Tree){
+    BST* curr = Tree;
+    while(*curr != NULL && (*curr)->RC != NULL) {
+        curr = &(*curr)->RC;
+    }
+
+    if(*curr == NULL) return;
+
+    Node* toDelete = *curr;
+    if (toDelete->student && toDelete->student->id) {
+        printf("\nDELETED: %s\n", toDelete->student->id);
+    }
+    *curr = toDelete->LC;
+    free(toDelete);
 }
