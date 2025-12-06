@@ -15,12 +15,14 @@ int main() {
     initialize(&A);
     initialize(&B);
 
-    insert(&A, 1);
+    insert(&A, A);
+    printf("A: %d\n", A);
     insert(&A, 6);
+    printf("A: %d\n", A);
     insert(&B, 3);
     insert(&B, 6);
     insert(&B, 7);
-
+    
     printf("Set A: ");
     display(A);
     printf("Set B: ");

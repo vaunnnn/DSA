@@ -22,11 +22,11 @@ int left(int* tree, int n);
 int right(int* tree, int n);
 void displayTree(int* tree, int n);
 
-void initTreeList(Ree** T, int n);
-void makeRoot(Ree** T, int root);
+Ree* initTreeList(Ree* T, int n);
+void makeRoot(Ree* T, int root);
 ChildNode* createNode(int child);
-void addChild(Ree** T, int parent, int child);
-void arrayToListTree(int* tree, Ree** T, int n);
+void addChild(Ree* T, int parent, int child);
+void arrayToListTree(int* tree, Ree* T, int n);
 void displayListTree(Ree* T, int n );
 
 int main () {
@@ -50,9 +50,11 @@ int main () {
     printf("Rightmost Node: %d\n", rightMost);
 
     Ree* T = NULL;
-    initTreeList(&T, n);
-    arrayToListTree(Tree, &T, n);
+    T = initTreeList(T, n);
+    arrayToListTree(Tree, T, n);
     displayListTree(T, n);
+
+    printf("Root Node: %d\n", T->rootIndex);
 
     return 0;
 }
@@ -115,16 +117,17 @@ int right(int* tree, int n) {
     return INVALID_NODE;
 }
 
-void initTreeList(Ree** T, int n) {
-    *T = (Ree*)malloc(sizeof(Ree));
-    (*T)->children = (ChildNode**)malloc(sizeof(ChildNode*) * n);
+Ree* initTreeList(Ree* T, int n) {
+    T = (Ree*)malloc(sizeof(Ree));
+    (T)->children = (ChildNode**)malloc(sizeof(ChildNode*) * n);
     
     for(int i = 0; i < n; i++) {
-        (*T)->children[i] = NULL;
+        (T)->children[i] = NULL;
     }
+    return T;
 }
-void makeRoot(Ree** T, int root) {
-    (*T)->rootIndex = root;
+void makeRoot(Ree* T, int root) {
+    (T)->rootIndex = root;
 }
 
 ChildNode* createNode(int child) {
@@ -134,13 +137,13 @@ ChildNode* createNode(int child) {
     return newNode;
 }
 
-void addChild(Ree** T, int parent, int child) {
+void addChild(Ree* T, int parent, int child) {
     ChildNode* newNode = createNode(child);
-    newNode->next = (*T)->children[parent];
-    (*T)->children[parent] = newNode;
+    newNode->next = T->children[parent];
+    (T)->children[parent] = newNode;
 }
 
-void arrayToListTree(int* tree, Ree** T, int n) {
+void arrayToListTree(int* tree, Ree* T, int n) {
     
     for(int i = 0; i < n; i++) {
 
@@ -171,12 +174,12 @@ void displayTree(int* tree, int n){
 
 void displayListTree(Ree* T, int n){
     printf("---Tree Children List Representation---\n");
-    printf("Root Index: %d\n", (T)->rootIndex);
+    printf("Root Index: %d\n", T->rootIndex);
     printf("Parent Index | Children List\n");
     printf("----------------------\n");
     for(int i = 0; i < n; i++) {
         printf("%12d | ", i);
-        ChildNode* curr = (T)->children[i];
+        ChildNode* curr = T->children[i];
         if(curr == NULL) {
             printf("(None)\n");
         } else {
